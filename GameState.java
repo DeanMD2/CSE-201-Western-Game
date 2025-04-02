@@ -13,7 +13,7 @@ public class GameState {
 		players = new ArrayList<>();
 		
 		for (String name : playerNames) {
-			players.add(new Player(name));
+			players.add(new Player(name, 0, 0));
 		}
 	}
 	
@@ -29,9 +29,6 @@ public class GameState {
 				}
 			}
 		}
-		
-		
-		
 		
 		//debug print out to check functionality
 		for (Player player : players) {

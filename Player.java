@@ -1,58 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
-    private String name;
-    private int health;
-    private int money;
-    private int score;
-    private List<String> pokerHand;
+
+public class Player extends ThePlayer1 {
     
-    public void move() {
-    	
-    }
+	private List<String> pokerHand;
+	private String name;
+	private int money;
+	private int score;
     
-    public void setScore(int score) {
-    	this.score = score;
-    }
-    
-    public int getScore() {
-    	return score;
-    }
-    
-    public void setHealth(int health) {
-    	this.health = health;
-    }
-    
-    public int getHealth() {
-    	return health;
-    }
-    
-    public void setMoney(int money) {
+    public Player(String name, int money, int score) {
+    	super(name, money, score);
+    	this.name = name;
     	this.money = money;
-    }
-    
-    public int getMoney() {
-    	return money;
-    }
-    
-    public void setName(String name) {
-    	this.name = name;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public Player(String name) {
-    	this.name = name;
-        pokerHand = new ArrayList<>();
-        health = 10;
-    }
-    
-    
-    
-    //poker methods below:
+    	this.score = score;
+		this.pokerHand = new ArrayList<>();
+	}
+  
+  //poker methods here:
     public void receiveCard(String card) {
         pokerHand.add(card);
     }
