@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Player extends ThePlayer1 {
     
 	private List<String> pokerHand;
@@ -15,8 +16,8 @@ public class Player extends ThePlayer1 {
     	this.score = score;
 		this.pokerHand = new ArrayList<>();
 	}
-
-	//poker methods below:
+  
+  //poker methods here:
     public void receiveCard(String card) {
         pokerHand.add(card);
     }

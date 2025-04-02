@@ -30,7 +30,6 @@ public class GameState {
 			}
 		}
 		
-		
 		//debug print out to check functionality
 		for (Player player : players) {
 			player.showHand();
