@@ -172,21 +172,21 @@ class MiningMinigame extends JPanel {
      * @param g the Graphics object used for drawing
      */
     @Override
-protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Panel background
+        // Background
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        // Draw the pan
+        // Draw the pan (a large dark circle behind the nugget)
         int panDiameter = 200;
         int panX = (getWidth() - panDiameter) / 2;
         int panY = (getHeight() - panDiameter) / 2;
         g.setColor(new Color(40, 40, 40)); // dark gray/black
         g.fillOval(panX, panY, panDiameter, panDiameter);
 
-        // Determine nugget color for results
+        // Determine nugget color
         Color nuggetColor = new Color(139, 69, 19); // default before click
         if (gameOver) {
             switch (result) {
@@ -202,7 +202,7 @@ protected void paintComponent(Graphics g) {
             }
         }
 
-        // Draw nugget centered within the pan
+        // Draw nugget if applicable (centered within the pan)
         if (nuggetColor != null) {
             g.setColor(nuggetColor);
             int nuggetDiameter = 100;
@@ -214,6 +214,6 @@ protected void paintComponent(Graphics g) {
         // Draw result message
         g.setFont(rusticFont);
         g.setColor(Color.WHITE);
-        g.drawString(resultMessage, 100, 40);
+        g.drawString(resultMessage, 20, 30);
     }
 }
