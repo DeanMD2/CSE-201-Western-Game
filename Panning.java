@@ -172,17 +172,48 @@ class MiningMinigame extends JPanel {
      * @param g the Graphics object used for drawing
      */
     @Override
-    protected void paintComponent(Graphics g) {
+protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        g.setColor(Color.BLUE); // background in mining window
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
-        
-        g.setColor(Color.ORANGE);
-        g.fillOval(150, 100, 100, 100); // gold nugget
-        
-        g.setFont(rusticFont); // game message prompt/result
+
+        // Panel background
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        // Draw the pan
+        int panDiameter = 200;
+        int panX = (getWidth() - panDiameter) / 2;
+        int panY = (getHeight() - panDiameter) / 2;
+        g.setColor(new Color(40, 40, 40)); // dark gray/black
+        g.fillOval(panX, panY, panDiameter, panDiameter);
+
+        // Determine nugget color for results
+        Color nuggetColor = new Color(139, 69, 19); // default before click
+        if (gameOver) {
+            switch (result) {
+                case "Gold":
+                    nuggetColor = Color.ORANGE;
+                    break;
+                case "Fool’s Gold":
+                    nuggetColor = Color.YELLOW;
+                    break;
+                case "Nothing":
+                    nuggetColor = null; // no nugget
+                    break;
+            }
+        }
+
+        // Draw nugget centered within the pan
+        if (nuggetColor != null) {
+            g.setColor(nuggetColor);
+            int nuggetDiameter = 100;
+            int nuggetX = (getWidth() - nuggetDiameter) / 2;
+            int nuggetY = (getHeight() - nuggetDiameter) / 2;
+            g.fillOval(nuggetX, nuggetY, nuggetDiameter, nuggetDiameter);
+        }
+
+        // Draw result message
+        g.setFont(rusticFont);
         g.setColor(Color.WHITE);
-        g.drawString(resultMessage, 122, 30);
+        g.drawString(resultMessage, 100, 40);
     }
 }
