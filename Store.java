@@ -10,6 +10,7 @@ public class Store {
 
     public Store() {
         itemsForSale = new HashMap<>();
+        itemsForSale.put("water", 1);
     }
 
     public void welcomeMenu() {
