@@ -45,6 +45,18 @@ public class ThePlayer1 {
     	return money;
     }
     
+    public void addMoney(int amount) {
+        this.money += amount;
+    }
+    
+    public boolean deductMoney(int amount) {
+        if (money >= amount) {
+            money -= amount;
+            return true;
+        }
+        return false;
+    }
+    
     public void setName(String name) {
     	this.name = name;
     }

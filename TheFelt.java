@@ -2,20 +2,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TheFelt {
-	
-    private List<String> communityCards;
+
+    private List<Card> communityCards;
 
     public TheFelt() {
         communityCards = new ArrayList<>();
     }
 
-    public void addCard(String card) {
+    public void addCard(Card card) {
         communityCards.add(card);
+    }
+    
+    public List<Card> getCommunityCards() {
+        return communityCards;
     }
 
     public void printBoard() {
         System.out.print("Community Cards: ");
-        for (String card : communityCards) {
+        for (Card card : communityCards) {
             System.out.print(card + " ");
         }
         System.out.println();
