@@ -3,13 +3,29 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
+/**
+ * Class: Panning
+ * @author Jason Hathaway
+ * @version 1.0
+ * Course: CSE 201 Spring 2025
+ * Written: April 4, 2025
+ *
+ * Purpose: This class contains logic and functionality that sets up
+ * the locations for the panning minigame.
+ */
 public class Panning extends JPanel {
     private static final int NUM_SPOTS = 5;
     private final Rectangle[] panningSpots;
     private final Random random;
     private String resultMessage = "Click a Spot to Travel to a Location:";
     private final Font rusticFont = new Font("Trattatello", Font.BOLD, 30);
-    
+
+    /**
+     * Paints the MiningMinigame interface, including background color,
+     * the gold nugget, and the result message.
+     *
+     * @param g the Graphics object used for drawing
+     */
     public Panning() {
         this.panningSpots = new Rectangle[NUM_SPOTS];
         this.random = new Random();
@@ -22,7 +38,11 @@ public class Panning extends JPanel {
         });
         generatePanningSpots();
     }
-    
+
+    /**
+     * Generates random rectangular panning spots where the user can click to start the mining minigame.
+     * The spots are spaced evenly horizontally and have slight vertical randomness.
+     */
     private void generatePanningSpots() {
         for (int i = 0; i < NUM_SPOTS; i++) {
             int x = 100 + i * 100;
@@ -30,7 +50,13 @@ public class Panning extends JPanel {
             panningSpots[i] = new Rectangle(x, y, 50, 50);
         }
     }
-    
+
+    /**
+     * Checks if the user's click corresponds to a valid panning spot.
+     * If so, it launches the mining minigame. Otherwise, displays a retry message.
+     *
+     * @param clickPoint the point where the user clicked
+     */
     private void checkPanningSpot(Point clickPoint) {
         for (Rectangle spot : panningSpots) {
             if (spot.contains(clickPoint)) {
@@ -41,7 +67,11 @@ public class Panning extends JPanel {
         resultMessage = "Try again! Click on a panning spot.";
         repaint();
     }
-    
+
+    /**
+     * Opens a new window that contains the mining minigame.
+     * Uses SwingUtilities to ensure GUI creation runs on the Event Dispatch Thread.
+     */
     private void openMiningMinigame() {
         SwingUtilities.invokeLater(() -> {
             JFrame gameFrame = new JFrame("Mining Minigame");
@@ -52,7 +82,14 @@ public class Panning extends JPanel {
             gameFrame.setVisible(true);
         });
     }
+
     
+    /**
+     * Paints the Panning minigame interface, including the land, river,
+     * panning spots, and any result message.
+     *
+     * @param g the Graphics object used for drawing
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -75,7 +112,12 @@ public class Panning extends JPanel {
         g.setColor(Color.WHITE);
         g.drawString(resultMessage, 20, 40);
     }
-    
+
+    /**
+     * Main method that launches the Panning minigame in a new window.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Panning Minigame");
@@ -88,13 +130,27 @@ public class Panning extends JPanel {
     }
 }
 
+/**
+* Class: MiningMinigame
+* @author Jason Hathaway
+* @version 1.0
+* Course: CSE 201 Spring 2025
+* Written: April 4, 2025
+*
+* Purpose: This class constructs the panel where you search for 
+* gold once a location is picked.
+*/
 class MiningMinigame extends JPanel {
     private final String[] outcomes = {"Gold", "Fool’s Gold", "Nothing"};
     private final Random random = new Random();
     private String resultMessage = "Click to grab for gold!";
     private final Font rusticFont = new Font("Trattatello", Font.BOLD, 20);
     private boolean gameOver = false;
-    
+
+    /**
+     * Constructs the MiningMinigame panel where players can click once
+     * to randomly receive a result such as gold, fool’s gold, or nothing.
+     */
     public MiningMinigame() {
         setPreferredSize(new Dimension(400, 300));
         addMouseListener(new MouseAdapter() {
@@ -108,7 +164,13 @@ class MiningMinigame extends JPanel {
             }
         });
     }
-    
+
+    /**
+     * Paints the MiningMinigame interface, including background color,
+     * gold nugget representation, and result message.
+     *
+     * @param g the Graphics object used for drawing
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
