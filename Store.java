@@ -43,7 +43,7 @@ public class Store {
             } else {
                 System.out.println("That item is out of stock at the moment");
                 int b = (int)(Math.random() * 5) + 1;
-                if (b < 4){
+                if (b < 2){
                     int a = (int)(Math.random() * 5) + 1;
                     System.out.println("We are sorry for the inconvenience and have decided to give you " + a + " dollars.");
                     player.setMoney(player.getMoney() + a);
