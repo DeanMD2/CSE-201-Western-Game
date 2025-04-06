@@ -17,9 +17,9 @@ public class Panning extends JPanel {
     private static final int NUM_SPOTS = 5;
     private final Rectangle[] panningSpots;
     private final Random random;
-    private String resultMessage = "Click a Spot to Travel to a Location:";
-    private final Font rusticFont = new Font("Trattatello", Font.BOLD, 30);
-
+    private String resultMessage = "Click a Spot to Pan for Gold!";
+    private final Font rusticFont = new Font("Papyrus",Font.BOLD, 30);
+    
     /**
      * Paints the MiningMinigame interface, including background color,
      * the gold nugget, and the result message.
@@ -38,7 +38,7 @@ public class Panning extends JPanel {
         });
         generatePanningSpots();
     }
-
+    
     /**
      * Generates random rectangular panning spots where the user can click to start the mining minigame.
      * The spots are spaced evenly horizontally and have slight vertical randomness.
@@ -50,7 +50,7 @@ public class Panning extends JPanel {
             panningSpots[i] = new Rectangle(x, y, 50, 50);
         }
     }
-
+    
     /**
      * Checks if the user's click corresponds to a valid panning spot.
      * If so, it launches the mining minigame. Otherwise, displays a retry message.
@@ -67,7 +67,7 @@ public class Panning extends JPanel {
         resultMessage = "Try again! Click on a panning spot.";
         repaint();
     }
-
+    
     /**
      * Opens a new window that contains the mining minigame.
      * Uses SwingUtilities to ensure GUI creation runs on the Event Dispatch Thread.
@@ -82,7 +82,6 @@ public class Panning extends JPanel {
             gameFrame.setVisible(true);
         });
     }
-
     
     /**
      * Paints the Panning minigame interface, including the land, river,
@@ -112,11 +111,9 @@ public class Panning extends JPanel {
         g.setColor(Color.WHITE);
         g.drawString(resultMessage, 20, 40);
     }
-
+    
     /**
-     * Main method that launches the Panning minigame in a new window.
-     *
-     * @param args command-line arguments
+     * Main method for building GUI frame.
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -143,9 +140,10 @@ public class Panning extends JPanel {
 class MiningMinigame extends JPanel {
     private final String[] outcomes = {"Gold", "Fool’s Gold", "Nothing"};
     private final Random random = new Random();
-    private String resultMessage = "Click to grab for gold!";
-    private final Font rusticFont = new Font("Trattatello", Font.BOLD, 20);
+    private String resultMessage = "Click to pan the dirt!";
+    private final Font rusticFont = new Font("Papyrus", Font.BOLD, 20);
     private boolean gameOver = false;
+    private String result = "";
 
     /**
      * Constructs the MiningMinigame panel where players can click once
@@ -157,14 +155,15 @@ class MiningMinigame extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!gameOver) {
-                    resultMessage = "You found " + outcomes[random.nextInt(outcomes.length)] + "!";
+                    result = outcomes[random.nextInt(outcomes.length)];
+                    resultMessage = "You found " + result + "!";
                     gameOver = true;
                     repaint();
                 }
             }
         });
     }
-
+    
     /**
      * Paints the MiningMinigame interface, including background color,
      * gold nugget representation, and result message.
@@ -217,3 +216,4 @@ class MiningMinigame extends JPanel {
         g.drawString(resultMessage, 20, 30);
     }
 }
+
