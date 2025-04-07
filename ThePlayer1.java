@@ -32,6 +32,15 @@ public class ThePlayer1 {
     public String getName() {
         return name;
     }
+
+    /**
+     * Returns the player's score.
+     *
+     * @return the score.
+     */
+    public int getScore() {
+        return score;
+    }
     
     /**
      * Returns the player's money.
