@@ -5,8 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Evaluates poker hands.
+ */
 public class HandEvaluator {
 
+    /**
+     * Evaluates the best 5-card hand from 7 cards.
+     *
+     * @param sevenCards a list of 7 cards.
+     * @return the best evaluated hand.
+     */
     public static EvaluatedHand evaluateBestHand(List<Card> sevenCards) {
         List<List<Card>> combinations = new ArrayList<>();
         combine(sevenCards, 0, new ArrayList<>(), combinations);
@@ -22,6 +31,14 @@ public class HandEvaluator {
         return bestEvaluatedHand;
     }
 
+    /**
+     * Recursively generates all 5-card combinations.
+     *
+     * @param cards the full card list.
+     * @param start starting index.
+     * @param current current combination.
+     * @param combinations all combinations.
+     */
     private static void combine(List<Card> cards, int start, List<Card> current, List<List<Card>> combinations) {
         if (current.size() == 5) {
             combinations.add(new ArrayList<>(current));
@@ -34,17 +51,23 @@ public class HandEvaluator {
         }
     }
 
+    /**
+     * Evaluates a 5-card hand.
+     *
+     * @param hand a list of 5 cards.
+     * @return a HandValue representing the hand's strength.
+     */
     public static HandValue evaluate5CardHand(List<Card> hand) {
-        // Sort hand descending by rank value.
+        // Sort hand descending by rank.
         Collections.sort(hand, (c1, c2) -> c2.getRank().getValue() - c1.getRank().getValue());
-        
-        // Build list of rank values.
+
+        // Get rank values.
         List<Integer> rankValues = new ArrayList<>();
         for (Card card : hand) {
             rankValues.add(card.getRank().getValue());
         }
-        
-        // Check for flush: all cards have the same suit.
+
+        // Check flush.
         boolean flush = true;
         Card.Suit suit = hand.get(0).getSuit();
         for (Card card : hand) {
@@ -53,14 +76,14 @@ public class HandEvaluator {
                 break;
             }
         }
-        
-        // Check for straight: cards are consecutive.
+
+        // Check straight.
         boolean straight = false;
         int highStraightCard = 0;
         if (isConsecutive(rankValues)) {
             straight = true;
             highStraightCard = rankValues.get(0);
-        } else if (rankValues.get(0) == 14) { // Ace-low straight (A,5,4,3,2)
+        } else if (rankValues.get(0) == 14) { // Ace-low straight
             List<Integer> altRanks = new ArrayList<>();
             for (int r : rankValues) {
                 altRanks.add(r == 14 ? 1 : r);
@@ -71,14 +94,14 @@ public class HandEvaluator {
                 highStraightCard = altRanks.get(0);
             }
         }
-        
-        // Count rank frequencies.
+
+        // Frequency count.
         Map<Integer, Integer> freq = new HashMap<>();
         for (int r : rankValues) {
             freq.put(r, freq.getOrDefault(r, 0) + 1);
         }
-        
-        // Sort frequency entries.
+
+        // Sorted frequency entries.
         List<Map.Entry<Integer, Integer>> freqList = new ArrayList<>(freq.entrySet());
         Collections.sort(freqList, new Comparator<Map.Entry<Integer, Integer>>() {
             @Override
@@ -90,11 +113,11 @@ public class HandEvaluator {
                 }
             }
         });
-        
+
         int category;
         List<Integer> tiebreakers = new ArrayList<>();
-        
-        // Assign hand categories and tie-breakers (categories: 8=Straight flush, 7=Four of a kind, etc.)
+
+        // Determine hand category.
         if (straight && flush) {
             category = 8; // Straight flush
             tiebreakers.add(highStraightCard);
@@ -147,10 +170,16 @@ public class HandEvaluator {
             category = 0; // High card
             tiebreakers.addAll(rankValues);
         }
-        
+
         return new HandValue(category, tiebreakers);
     }
-    
+
+    /**
+     * Checks if the list of numbers is consecutive.
+     *
+     * @param nums list of integers.
+     * @return true if consecutive.
+     */
     private static boolean isConsecutive(List<Integer> nums) {
         if (nums.size() != 5) return false;
         for (int i = 0; i < nums.size() - 1; i++) {

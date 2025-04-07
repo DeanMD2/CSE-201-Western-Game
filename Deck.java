@@ -1,11 +1,16 @@
 import java.util.Random;
 
+/**
+ * Represents a standard deck of 52 cards.
+ */
 public class Deck {
-
     private static final int DECK_SIZE = 52;
     private Card[] theDeck;
     private int currCardIndex;
 
+    /**
+     * Constructs a deck with 52 cards.
+     */
     public Deck() {
         Card.Suit[] suits = Card.Suit.values();
         Card.Rank[] ranks = Card.Rank.values();
@@ -19,6 +24,9 @@ public class Deck {
         currCardIndex = 0;
     }
 
+    /**
+     * Shuffles the deck.
+     */
     public void shuffle() {
         Random rand = new Random();
         for (int i = theDeck.length - 1; i > 0; i--) {
@@ -30,14 +38,21 @@ public class Deck {
         currCardIndex = 0;
     }
 
+    /**
+     * Deals the next card.
+     *
+     * @return the next card or null if none left.
+     */
     public Card dealCard() {
         if (currCardIndex < DECK_SIZE) {
             return theDeck[currCardIndex++];
-        } else {
-            return null;
         }
+        return null;
     }
 
+    /**
+     * Prints the deck.
+     */
     public void printDeck() {
         for (int i = 0; i < theDeck.length; i++) {
             System.out.print(theDeck[i] + " ");
