@@ -1,14 +1,29 @@
 import java.util.List;
 
+/**
+ * Represents a hand's value for comparison.
+ */
 public class HandValue implements Comparable<HandValue> {
-    private int category; // Higher means a stronger hand.
-    private List<Integer> tiebreakers; // Used to break ties within the same category.
+    private int category; // Hand category.
+    private List<Integer> tiebreakers; // Tie-breaker values.
 
+    /**
+     * Constructs a HandValue.
+     *
+     * @param category hand category.
+     * @param tiebreakers tie-breaker values.
+     */
     public HandValue(int category, List<Integer> tiebreakers) {
         this.category = category;
         this.tiebreakers = tiebreakers;
     }
 
+    /**
+     * Compares hand values.
+     *
+     * @param other the other HandValue.
+     * @return negative, zero, or positive.
+     */
     @Override
     public int compareTo(HandValue other) {
         if (this.category != other.category) {
