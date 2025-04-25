@@ -1,52 +1,40 @@
 /**
-* Class: Townhall
-* @author kasey cole
-* @version 1.0
-* Course : CSE 201 fall 2025
-* Written: April 2, 2025
-*
-* Purpose: – This class represents the Townhall room in our game
-* 
-*/
+ * Class: Townhall
+ * Author: Kasey Cole 
+ * @version 1.3
+ * Course: CSE 201 Spring 2025
+ * Written: April 2, 2025
+ *
+ * Purpose: Shows the player’s current gold and win status.
+ */
 public class Townhall {
-    private Player player;
+    private ThePlayer1 player;
 
     /**
-     * Constructs a Townhall instance associated with a player.
-     * 
-     * @param player The player interacting with the townhall.
+     * Constructor
+     * @param player The player object.
      */
-    public Townhall(Player player) {
+    public Townhall(ThePlayer1 player) {
         this.player = player;
     }
-    
-    /**
-     * Displays an introduction message for the Townhall.
-     */ 
-    public void IntroText() {
-        System.out.println("\n=== TOWNHALL ===");
-        System.out.println("Welcome to the Townhall, ");
-     
-    }
-    
-     /**
-     * Checks the player's current score and money.
-     * If the player has at least $2000, they win the game.
-     * Otherwise, it displays how much more money is needed to win.
-     */
-    public void checkWin() {
-    	System.out.println("Current Score:" + player.getScore());
-    	   
-         System.out.println("Current Money: $" + player.getMoney());
-         // I just set the win condition to purchase the ranch to 2000 dollars
-         if (player.getScore() >= 2000 ) {
-        	  System.out.println("Congradulations! you have earned enough money to"
-        	  		+ " purchase your ranch!");	     	  
-          } else {
-        		System.out.println("You dont have enough money to purchase the ranch."
-                     + " You need $"  + (2000 - player.getMoney()) + " more." ); 
-        		 	  
-          }              
-    }
-}
 
+    /**
+     * Displays player status and indroduces the player to the game.
+     */
+    public void enterTownhall() {
+        System.out.println("\nYou stroll into the Town Hall And see what the man at the counter has to say... ");
+        System.out.println("Hey there Partner! Welcome to BoomTown's Town Hall,  There is plenty to do around here.\n" 
+        		            + "You can try your hand at poker if your feeling lucky, or pan for gold at the nearby creek!\n"
+        		            + "Rumor has it that the bartender at the saloon is looking for a extra hand as well. Good Luck!");
+        
+        System.out.println("Prospector: " + player.getName());
+        System.out.println("Current Gold: " + player.getGold());
+
+        if (player.getGold() >= 2000) {
+            System.out.println("You’ve earned a place in the BoomTown Hall of Fame!");
+        } else {
+            System.out.println("Keep at it! 2000 gold makes you the legend around here.");
+        }
+    }
+    
+}
