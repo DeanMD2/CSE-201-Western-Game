@@ -23,7 +23,13 @@ public class Store {
     public Store() {
         itemsForSale = new HashMap<>();
         itemsForSale.put("water", 1);
+        itemsForSale.put("bread", 2);
+        itemsForSale.put("whiskey", 5);
+        itemsForSale.put("arrow", 3);
+        itemsForSale.put("torch", 4);
+        itemsForSale.put("dagger", 10);
     }
+
 
     /**
      * Displays the welcome menu when a player enters the store.
@@ -68,7 +74,7 @@ public class Store {
                 int bonusChance = (int) (Math.random() * 5) + 1;
 
                 if (bonusChance < 2) {
-                    int bonus = (int) (Math.random() * 5) + 1;
+                    int bonus = (int) (Math.random() * 5) + 1;  // a lucky chance to get money in store
                     System.out.println("We are sorry for the inconvenience and have decided to give you $" + bonus + ".");
                     player.setMoney(player.getMoney() + bonus);
                 }
@@ -76,6 +82,6 @@ public class Store {
         }
 
         System.out.println("Feel free to come by again!");
-        sc.close();
+        //sc.close();  // not close scanner in shop
     }
 }
