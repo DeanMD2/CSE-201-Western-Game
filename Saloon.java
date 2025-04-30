@@ -67,7 +67,6 @@ public class Saloon {
             @Override
             public void run() {
                 if (secondsRemaining > 0) {
-                    System.out.println("Time remaining: " + secondsRemaining + " seconds");
                     secondsRemaining--;
                 } else {
                     timer.cancel();
@@ -79,7 +78,6 @@ public class Saloon {
             }
         };
         timer.scheduleAtFixedRate(task, 0, 1000);
-        fillOrder(drink);
     }
 
     /**
@@ -88,21 +86,24 @@ public class Saloon {
      */
     public void fillOrder(String currentDrink) {
         Scanner userIn = new Scanner(System.in);
+        
         while (!orderCompleted) {
             System.out.print("Enter drink name: ");
             String userText = userIn.nextLine();
+            
             if (userText.equalsIgnoreCase(currentDrink)) {
-                orderQueue.poll();
+                // Add a new drink before removing the current one
+                orderQueue.add(orderRandomizer()); 
+                orderQueue.poll(); // Remove the completed drink
+                
                 player.addGold(50);
                 orderCompleted = true;
                 timer.cancel();
                 System.out.println("Correct! You earned 50 gold.");
             }
         }
-        userIn.close();
     }
 
-    /** Handles the game flow by passing the player 6 drink orders */
     /**
      * Driver method to help make the game smooth.
      */
@@ -111,31 +112,24 @@ public class Saloon {
         
         introText();
         System.out.println();
-    
+
         for (int i = 0; i < 6; i++) {
             System.out.println("\n--- Order " + (i + 1) + " ---");
-            passDrink();
-        
-            String currentDrink = orderQueue.peek();
-            orderCompleted = false;
 
-            // Start timer for current drink
-            startTimer(currentDrink);
-        
-            while (!orderCompleted) {
-                System.out.print("Enter drink name: ");
-                String userText = userIn.nextLine();
-                if (userText.equalsIgnoreCase(currentDrink)) {
-                    orderQueue.poll();
-                    player.addGold(3);
-                    orderCompleted = true;
-                    timer.cancel();
-                    System.out.println("Correct! You earned 3 gold.");
-                }
-            }
+            // Generate & add new drink
+            String drink = orderRandomizer();
+            orderQueue.add(drink);
+            System.out.println("A customer ordered a '" + drink + "'. Type it correctly within 10 seconds!");
+
+            // Start timer for this drink
+            startTimer(drink);
+
+            // Prompt user input for this drink separately
+            fillOrder(drink);
         }
-    System.out.println();
-    System.out.println("Game Over! Final Gold: " + player.getGold());
-    userIn.close();
-}
+
+        System.out.println();
+        System.out.println("Game Over! Final Gold: " + player.getGold());
+        userIn.close();
+    }
 }
