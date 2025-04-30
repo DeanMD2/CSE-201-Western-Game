@@ -30,7 +30,7 @@ public class Townhall {
         System.out.println("Prospector: " + player.getName());
         System.out.println("Current Gold: " + player.getGold());
 
-        if (player.getGold() >= 2000) {
+        if (player.getGold() >= 1000) {
             System.out.println("You’ve earned a place in the BoomTown Hall of Fame!");
         } else {
             System.out.println("Keep at it! 2000 gold makes you the legend around here.");
