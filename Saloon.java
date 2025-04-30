@@ -72,8 +72,8 @@ public class Saloon {
                 } else {
                     timer.cancel();
                     if (!orderCompleted) {
-                        System.out.println("Time's up! You lost 2 gold.");
-                        player.addGold(-2);
+                        System.out.println("Time's up! You lost 25 gold.");
+                        player.addGold(-25);
                     }
                 }
             }
@@ -93,10 +93,10 @@ public class Saloon {
             String userText = userIn.nextLine();
             if (userText.equalsIgnoreCase(currentDrink)) {
                 orderQueue.poll();
-                player.addGold(3);
+                player.addGold(50);
                 orderCompleted = true;
                 timer.cancel();
-                System.out.println("Correct! You earned 3 gold.");
+                System.out.println("Correct! You earned 50 gold.");
             }
         }
         userIn.close();
