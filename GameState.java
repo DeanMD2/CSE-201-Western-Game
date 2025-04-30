@@ -300,8 +300,6 @@ public class GameState {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         List<String> playerNames = new ArrayList<>();
-        System.out.println("Welcome to our western game!");
-        System.out.println("Our game starts from this game desk.");
         System.out.println("Win this game to prove you can survive from western world");
         System.out.println("Enter your player name: ");
         String humanName = sc.next();
