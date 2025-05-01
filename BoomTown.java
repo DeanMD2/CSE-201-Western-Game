@@ -25,7 +25,7 @@ public class BoomTown {
         String playerName = inputScanner.nextLine();
 
         // Initialize player with poker-compatible attributes
-        HumanPlayer player = new HumanPlayer(playerName, 200, 0, 1000);
+        ThePlayer1 player = new ThePlayer1(playerName, 200, 1000);
 
         boolean isRunning = true;
 
@@ -36,32 +36,28 @@ public class BoomTown {
             System.out.println("2. General Store");
             System.out.println("3. Town Hall");
             System.out.println("4. Saloon Challenge (Tapping)");
-            System.out.println("5. Saloon Poker Game");
-            System.out.println("6. Exit Game");
-            System.out.print("Enter your choice (1-6): ");
+            System.out.println("5. Poker Game");
+            System.out.println("6. Player Stats");
+            System.out.println("7. Exit Game");
+            System.out.print("Enter your choice (1-7): ");
 
             String choice = inputScanner.nextLine();
 
             switch (choice) {
                 case "1": {
-                    Panning panningGame = new Panning(player);
-                    panningGame.start();
+                    new Panning(player, inputScanner).start();
                     break;
                 }
                 case "2": {
-                    Store store = new Store(player);
-                    store.enterStore();
+                    new Store(player, inputScanner).enterStore();;
                     break;
                 }
                 case "3": {
-                    Townhall townhall = new Townhall(player);
-                    
-                    townhall.enterTownhall();
+                	new Townhall(player).enterTownhall();
                     break;
                 }
                 case "4": {
-                    Saloon saloon = new Saloon(player);
-                    saloon.playGame();
+                	new Saloon(player, inputScanner).play();
                     break;
                 }
                 case "5": {
@@ -71,11 +67,17 @@ public class BoomTown {
                     playerNames.add("Doc Holliday");
                     playerNames.add("Calamity Jane");
                     playerNames.add("Wild Bill");
-                    GameState pokerGame = new GameState(playerNames);
+                    GameState pokerGame = new GameState(playerNames, inputScanner);
                     pokerGame.startGame();
                     break;
                 }
                 case "6": {
+                	System.out.println("\n--- Player Stats ---");
+                	System.out.println("Name: " + player.getName());
+                	System.out.println("Gold: " + player.getGold());
+                	break;
+                }
+                case "7": {
                     System.out.println("Thanks for visiting BoomTown. Goodbye!");
                     isRunning = false;
                     break;

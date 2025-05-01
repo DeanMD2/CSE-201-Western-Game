@@ -19,8 +19,8 @@ public class Player extends ThePlayer1 {
      * @param score player's score.
      * @param stack player's betting stack.
      */
-    public Player(String name, int money, int score, int stack) {
-        super(name, money, score, stack);
+    public Player(String name, int gold, int stack) {
+        super(name, gold, stack);
         pokerHand = new ArrayList<>();
         currentBet = 0;
         folded = false;
@@ -40,6 +40,15 @@ public class Player extends ThePlayer1 {
      */
     public void showHand() {
         System.out.println(getName() + "'s hand: " + pokerHand);
+    }
+    
+    /**
+     * Consolidates the current betting stack into the player's total money.
+     * This is called when the player exits the game.
+     */
+    public void cashOut() {
+        setGold(getGold() + getStack());
+        setStack(0);
     }
 
     /**
@@ -110,6 +119,24 @@ public class Player extends ThePlayer1 {
     public GameState.Action makeAction(GameState gameState) {
         return GameState.Action.CALL;
     }
+    
+    /**
+     * Adds additional chips to the player's current betting stack using funds from their overall money.
+     * The player's money is reduced by the rebuy amount.
+     *
+     * @param amount the rebuy amount.
+     */
+    public void rebuy(int amount) {
+        if (getGold() >= amount) {
+            // Subtract the rebuy fee from overall money.
+            setGold(getGold() - amount);
+            // Add the rebuy fee to the current betting stack.
+            setStack(getStack() + amount);
+        } else {
+            System.out.println(getName() + " does not have enough funds to rebuy.");
+        }
+    }
+
 
     /**
      * Prompts the human player for an action.
