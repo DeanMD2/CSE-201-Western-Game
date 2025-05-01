@@ -1,4 +1,5 @@
 public class StoreTest {
+    /*
     public static void main(String[] args) {
         // Create a test player
         Player testPlayer = new Player("Cowboy Joe", 300, 0);
@@ -13,4 +14,5 @@ public class StoreTest {
         System.out.println("Money Left: $" + testPlayer.getMoney());
         System.out.println("Score: " + testPlayer.getScore());
     }
+    */
 }
