@@ -13,8 +13,8 @@ public class HumanPlayer extends Player {
      * @param score player's score.
      * @param stack player's betting stack.
      */
-    public HumanPlayer(String name, int money, int score, int stack) {
-        super(name, money, score, stack);
+    public HumanPlayer(String name, int money, int stack) {
+        super(name, money, stack);
     }
     
     /**

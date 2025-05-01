@@ -3,9 +3,7 @@
  */
 public class ThePlayer1 {
     private String name;
-    private int health;
-    private int money;  // overall money
-    private int score;
+    private int gold;  // overall money
     private int stack;  // current betting stack
 
     /**
@@ -16,12 +14,10 @@ public class ThePlayer1 {
      * @param score player's score.
      * @param stack player's stack.
      */
-    public ThePlayer1(String name, int money, int score, int stack) {
+    public ThePlayer1(String name, int gold, int stack) {
         this.name = name;
-        this.money = money;
-        this.score = score;
+        this.gold = gold;
         this.stack = stack;
-        this.health = 10;
     }
     
     /**
@@ -32,23 +28,14 @@ public class ThePlayer1 {
     public String getName() {
         return name;
     }
-
-    /**
-     * Returns the player's score.
-     *
-     * @return the score.
-     */
-    public int getScore() {
-        return score;
-    }
     
     /**
      * Returns the player's money.
      *
      * @return the money.
      */
-    public int getMoney() {
-        return money;
+    public int getGold() {
+        return gold;
     }
     
     /**
@@ -56,8 +43,8 @@ public class ThePlayer1 {
      *
      * @param money the new money value.
      */
-    public void setMoney(int money) {
-        this.money = money;
+    public void setGold(int gold) {
+        this.gold = gold;
     }
     
     /**
@@ -83,8 +70,8 @@ public class ThePlayer1 {
      *
      * @param amount the amount to add.
      */
-    public void addMoney(int amount) {
-        this.money += amount;
+    public void addGold(int amount) {
+        this.gold += amount;
         this.stack += amount;
     }
     
@@ -94,9 +81,9 @@ public class ThePlayer1 {
      * @param amount the amount to deduct.
      * @return true if successful, false otherwise.
      */
-    public boolean deductMoney(int amount) {
-        if (money >= amount && stack >= amount) {
-            money -= amount;
+    public boolean spendGold(int amount) {
+        if (gold >= amount && stack >= amount) {
+            gold -= amount;
             stack -= amount;
             return true;
         }

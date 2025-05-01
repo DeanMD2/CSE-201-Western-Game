@@ -1,87 +1,70 @@
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
  * Class: Store
- * @author Hanwen Xing
- * @version 1.7
- * Course: CSE201 Spring 2025
- * Written: April 24, 2025
+ * Author: 
+ * @version 1.0
+ * Course: CSE 201 Spring 2025
+ * Written: April 25, 2025
  *
- * Purpose: This class represents a store where players can purchase items.
- * It handles store display, purchasing logic, and occasional bonus money giveaways.
+ * Purpose: Allows the player to buy items with gold.
  */
 public class Store {
-
-    /** Maps item names to their prices */
-    private Map<String, Integer> itemsForSale;
-
-    /**
-     * Constructor initializes store with default items.
-     */
-    public Store() {
-        itemsForSale = new HashMap<>();
-        itemsForSale.put("water", 1);
-        itemsForSale.put("bread", 2);
-        itemsForSale.put("whiskey", 5);
-        itemsForSale.put("arrow", 3);
-        itemsForSale.put("torch", 4);
-        itemsForSale.put("dagger", 10);
-    }
-
+    private ThePlayer1 player;
+    private Scanner input;
 
     /**
-     * Displays the welcome menu when a player enters the store.
+     * Constructor
+     * @param player The player object.
      */
-    public void welcomeMenu() {
-        System.out.println();
-        System.out.println("Welcome to the greatest store in this town");
-        System.out.println("We have run out of stock at the moment.");
-        System.out.println("//////////////////////////////////////");
-        System.out.println();
+    public Store(ThePlayer1 player, Scanner input) {
+        this.player = player;
+        this.input = input;
     }
 
     /**
-     * Interacts with the player and handles purchasing logic.
-     *
-     * @param player the Player object who enters the store
+     * Displays store items and processes purchases.
      */
-    public void enterStore(Player player) {
-        Scanner sc = new Scanner(System.in);
-        boolean shopping = true;
+    public void enterStore() {
 
-        while (shopping) {
-            welcomeMenu();
-            System.out.println("You have $" + player.getMoney());
-            System.out.print("Type the goods' name or type 'exit' to leave: ");
+        System.out.println("\nWelcome to the General Store!");
+        System.out.println("Available Items:");
+        System.out.println("1. Pickaxe (20 gold)");
+        System.out.println("2. Canteen (10 gold)");
+        System.out.println("3. Donkey (50 gold)");
+        System.out.print("Choose an item to buy or 0 to leave: ");
 
-            String input = sc.nextLine().trim();
+        int choice = input.nextInt();
+        int cost = 0;
+        String item = "";
 
-            if (input.equalsIgnoreCase("exit")) {
-                shopping = false;
-            } else if (itemsForSale.containsKey(input)) {
-                int cost = itemsForSale.get(input);
-
-                if (player.getMoney() >= cost) {
-                    player.setMoney(player.getMoney() - cost);
-                    System.out.println("You get " + input + " using $" + cost);
-                } else {
-                    System.out.println("Not enough money to buy it.");
-                }
-            } else {
-                System.out.println("That item is out of stock at the moment.");
-                int bonusChance = (int) (Math.random() * 5) + 1;
-
-                if (bonusChance < 2) {
-                    int bonus = (int) (Math.random() * 5) + 1;  // a lucky chance to get money in store
-                    System.out.println("We are sorry for the inconvenience and have decided to give you $" + bonus + ".");
-                    player.setMoney(player.getMoney() + bonus);
-                }
-            }
+        switch (choice) {
+            case 1:
+                item = "Pickaxe";
+                cost = 20;
+                break;
+            case 2:
+                item = "Canteen";
+                cost = 10;
+                break;
+            case 3:
+                item = "Donkey";
+                cost = 50;
+                break;
+            case 0:
+                System.out.println("You head out of the store.");
+                return;
+            default:
+                System.out.println("That item doesn't exist.");
+                return;
         }
 
-        System.out.println("Feel free to come by again!");
-        //sc.close();  // not close scanner in shop
+        if (player.spendGold(cost)) {
+            System.out.println("You bought a " + item + "!");
+        } else {
+            System.out.println("Not enough gold!");
+        }
+
+        System.out.println("Current Gold: " + player.getGold());
     }
 }
