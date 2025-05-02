@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 /**
  * Class: BoomTown
- * @author 
- * @version 1.0
+ * @author Jason Hathaway, Matthew Valachek
+ * @version 1.1
  * Course: CSE 201 Spring 2025
- * Written: April 25, 2025
+ * Written: 5/2/2025
  *
  * Purpose: Driver class for the BoomTown game. Manages navigation between minigames and tracks gold.
  */
@@ -35,7 +35,7 @@ public class BoomTown {
             System.out.println("1. Panning for Gold");
             System.out.println("2. General Store");
             System.out.println("3. Town Hall");
-            System.out.println("4. Saloon Challenge (Tapping)");
+            System.out.println("4. Saloon Challenge");
             System.out.println("5. Poker Game");
             System.out.println("6. Player Stats");
             System.out.println("7. Exit Game");

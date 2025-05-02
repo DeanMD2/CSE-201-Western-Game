@@ -8,9 +8,15 @@ import java.util.TimerTask;
 /**
  * Class: Saloon
  * @author Matthew Valachek
- * @version 1.1
+ * @version 1.2
  * Course: CSE 201 E Spring 2025
- * Written: 4/4/2025
+ * Written: 5/2/2025
+ * 
+ * This class provides the functionality of the saloon level of the BoomTown game.
+ * The class creates a self-contained room with associated methods to pass drinks,
+ * fill orders, randomly select drink names for the user to type in to fill the orders,
+ * and also adds the ability to have an exit sequence should the user want to leave
+ * the level prematurely.
  */
 public class Saloon {
     private Queue<String> orderQueue = new LinkedList<>();
@@ -18,6 +24,7 @@ public class Saloon {
     private ThePlayer1 player;
     private boolean orderCompleted = false;
     private Scanner input;
+    private boolean forceQuit = false;
 
     /**
      * Constructor
@@ -33,6 +40,8 @@ public class Saloon {
      */
     public void introText() {
         System.out.println("Welcome to the saloon! Get ready to mix up some drinks.");
+        System.out.println("Type in the drink as it appears or type 'EXIT' to stop.");
+        System.out.println("-------------------------------------------------------");
     }
 
     /**
@@ -52,7 +61,8 @@ public class Saloon {
      */
     public String orderRandomizer() {
         String[] menu = {"Old Fashioned", "White Russian", "Shirley Temple",
-                         "Bloody Mary", "Sarsaparilla", "Stone Fence"};
+                         "Bloody Mary", "Sarsaparilla", "Stone Fence", "Snakebite", 
+                         "Red Eye", "Gin Sling", "Mint Julep", "Cactus Cooler"};
         return menu[new Random().nextInt(menu.length)];
     }
 
@@ -102,6 +112,10 @@ public class Saloon {
                 timer.cancel();
                 System.out.println("Correct! You earned 50 gold.");
             }
+            if (userText.equalsIgnoreCase("EXIT")) {
+            	forceQuit = true;
+            	return;
+            }
         }
     }
 
@@ -114,18 +128,23 @@ public class Saloon {
         System.out.println();
 
         for (int i = 0; i < 6; i++) {
-            System.out.println("\n--- Order " + (i + 1) + " ---");
+        	if (!forceQuit) {
+        		System.out.println("\n--- Order " + (i + 1) + " ---");
 
-            // Generate & add new drink
-            String drink = orderRandomizer();
-            orderQueue.add(drink);
-            System.out.println("A customer ordered a '" + drink + "'. Type it correctly within 10 seconds!");
+                // Generate & add new drink
+                String drink = orderRandomizer();
+                orderQueue.add(drink);
+                System.out.println("A customer ordered a '" + drink + "'. Type it correctly within 10 seconds!");
 
-            // Start timer for this drink
-            startTimer(drink);
+                // Start timer for this drink
+                startTimer(drink);
 
-            // Prompt user input for this drink separately
-            fillOrder(drink);
+                // Prompt user input for this drink separately
+                fillOrder(drink);
+        	} else {
+        		break;
+        	}
+            
         }
 
         System.out.println();
