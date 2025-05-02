@@ -89,7 +89,7 @@ public class BoomTown {
             }
 
             // Check win condition
-            if (player.getGold() >= 2000) {
+            if (player.getGold() >= 1000) {
                 System.out.println("\nCongratulations, " + player.getName() + "!");
                 System.out.println("You’ve struck it rich with " + player.getGold() + " gold!");
                 System.out.println("Thanks for playing BoomTown.");
