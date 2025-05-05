@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class Saloon {
     private Queue<String> orderQueue = new LinkedList<>();
     private Timer timer;
-    private ThePlayer1 player;
+    private Player player;
     private boolean orderCompleted = false;
     private Scanner input;
     private boolean forceQuit = false;
@@ -30,7 +30,7 @@ public class Saloon {
      * Constructor
      * @param player The player object.
      */
-    public Saloon(ThePlayer1 player, Scanner input) {
+    public Saloon(Player player, Scanner input) {
         this.player = player;
         this.input = input;
     }

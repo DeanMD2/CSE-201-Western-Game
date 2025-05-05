@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Purpose: Text-based panning minigame where player can search for gold.
  */
 public class Panning {
-    private ThePlayer1 player;
+    private Player player;
     private Scanner input;
     private final Random random;
     private final String[] locations = {
@@ -27,7 +27,7 @@ public class Panning {
      * @param player The player object.
      * @param inputScanner 
      */
-    public Panning(ThePlayer1 player, Scanner input) {
+    public Panning(Player player, Scanner input) {
         this.player = player;
         this.input = input;
         this.random = new Random();
@@ -46,6 +46,7 @@ public class Panning {
 
         System.out.print("Enter your choice (1-" + locations.length + "): ");
         int choice = input.nextInt();
+        input.nextLine();
 
         if (choice < 1 || choice > locations.length) {
             System.out.println("That spot’s no good. Try again next time.");
