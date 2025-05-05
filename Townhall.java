@@ -8,13 +8,13 @@
  * Purpose: Shows the player’s current gold and win status.
  */
 public class Townhall {
-    private ThePlayer1 player;
+    private Player player;
 
     /**
      * Constructor
      * @param player The player object.
      */
-    public Townhall(ThePlayer1 player) {
+    public Townhall(Player player) {
         this.player = player;
     }
 

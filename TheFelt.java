@@ -2,50 +2,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manages the community cards on the felt.
+ * Class: TheFelt
+ * Author: Dean DiCarlo
+ * @version 1.0
+ * Course: CSE 201
+ *
+ * Purpose: Manages the community (“board”) cards during a poker hand,
+ *          allowing addition, display, retrieval, and clearing of cards.
  */
 public class TheFelt {
-    
     private List<Card> communityCards;
 
     /**
-     * Creates a new felt with an empty list of community cards.
+     * Constructs an empty felt with no community cards.
      */
     public TheFelt() {
         communityCards = new ArrayList<>();
     }
 
     /**
-     * Adds a card to the community cards.
+     * Adds a card to the community board.
      *
-     * @param card the card to add.
+     * @param card the Card to add to the community
      */
     public void addCard(Card card) {
         communityCards.add(card);
     }
 
     /**
-     * Prints the community cards.
+     * Prints the community cards to the console in a single line.
      */
     public void printBoard() {
         System.out.print("Community Cards: ");
         for (Card card : communityCards) {
-            System.out.print(card.toString() + " ");
+            System.out.print(card + " ");
         }
         System.out.println();
     }
 
     /**
-     * Returns the list of community cards.
-     *
-     * @return the community cards.
+     * @return the list of community cards currently on the felt
      */
     public List<Card> getCommunityCards() {
         return communityCards;
     }
-    
+
     /**
-     * Clears all community cards.
+     * Removes all cards from the community board.
      */
     public void clear() {
         communityCards.clear();

@@ -1,157 +1,91 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 /**
- * Represents a poker player with a hand and bet tracking.
+ * Class: Player
+ * @version 1.0
+ * Course: CSE 201
+ *
+ * Purpose: Defines the base attributes and behaviors for a game participant,
+ *          including name, overall money (gold), and current betting stack,
+ *          with methods to adjust and query these values.
  */
-public class Player extends ThePlayer1 {
-
-    private List<Card> pokerHand;
-    private int currentBet; // Current round bet.
-    private boolean folded; // True if player has folded.
+public class Player {
+    private String name;   // Player's display name
+    private int gold;      // Total money available to the player
+    private int stack;     // Chips currently at the table for betting
 
     /**
-     * Creates a player with the given name, money, score, and stack.
+     * Constructs a Player with the given name, gold, and stack values.
      *
-     * @param name  player's name.
-     * @param money player's total money.
-     * @param score player's score.
-     * @param stack player's betting stack.
+     * @param name  the display name of the player
+     * @param gold  the total money the player possesses
+     * @param stack the amount of chips the player brings to the table
      */
     public Player(String name, int gold, int stack) {
-        super(name, gold, stack);
-        pokerHand = new ArrayList<>();
-        currentBet = 0;
-        folded = false;
+        this.name = name;
+        this.gold = gold;
+        this.stack = stack;
     }
 
     /**
-     * Adds a card to the player's hand.
+     * @return the player's display name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return the player's total money (gold)
+     */
+    public int getGold() {
+        return gold;
+    }
+
+    /**
+     * Sets the player's total money (gold).
      *
-     * @param card the card to add.
+     * @param gold the new total money value
      */
-    public void receiveCard(Card card) {
-        pokerHand.add(card);
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     /**
-     * Prints the player's hand.
+     * @return the player's current betting stack
      */
-    public void showHand() {
-        System.out.println(getName() + "'s hand: " + pokerHand);
-    }
-    
-    /**
-     * Consolidates the current betting stack into the player's total money.
-     * This is called when the player exits the game.
-     */
-    public void cashOut() {
-        setGold(getGold() + getStack());
-        setStack(0);
+    public int getStack() {
+        return stack;
     }
 
     /**
-     * Returns the player's hand.
+     * Sets the player's current betting stack.
      *
-     * @return list of cards.
+     * @param stack the new stack value
      */
-    public List<Card> getHand() {
-        return pokerHand;
+    public void setStack(int stack) {
+        this.stack = stack;
     }
 
     /**
-     * Clears the player's hand.
-     */
-    public void clearHand() {
-        pokerHand.clear();
-    }
-
-    /**
-     * Returns the current bet.
+     * Adds the specified amount to both the player's gold and stack.
      *
-     * @return current bet amount.
+     * @param amount the amount to add
      */
-    public int getCurrentBet() {
-        return currentBet;
+    public void addGold(int amount) {
+        this.gold += amount;
+        this.stack += amount;
     }
 
     /**
-     * Resets the current bet.
-     */
-    public void resetCurrentBet() {
-        currentBet = 0;
-    }
-
-    /**
-     * Increases the current bet.
+     * Deducts the specified amount from the player's gold and stack if sufficient funds exist.
      *
-     * @param amount amount to add.
+     * @param amount the amount to deduct
+     * @return true if deduction succeeded, false if insufficient funds
      */
-    public void placeBet(int amount) {
-        currentBet += amount;
-    }
-
-    /**
-     * Checks if the player is folded.
-     *
-     * @return true if folded.
-     */
-    public boolean isFolded() {
-        return folded;
-    }
-
-    /**
-     * Sets the folded status.
-     *
-     * @param folded true if folded.
-     */
-    public void setFolded(boolean folded) {
-        this.folded = folded;
-    }
-
-    /**
-     * Returns the player's action during a bet.
-     *
-     * @param gameState current game state.
-     * @return the chosen action.
-     */
-    public GameState.Action makeAction(GameState gameState) {
-        return GameState.Action.CALL;
-    }
-    
-    /**
-     * Adds additional chips to the player's current betting stack using funds from their overall money.
-     * The player's money is reduced by the rebuy amount.
-     *
-     * @param amount the rebuy amount.
-     */
-    public void rebuy(int amount) {
-        if (getGold() >= amount) {
-            // Subtract the rebuy fee from overall money.
-            setGold(getGold() - amount);
-            // Add the rebuy fee to the current betting stack.
-            setStack(getStack() + amount);
-        } else {
-            System.out.println(getName() + " does not have enough funds to rebuy.");
+    public boolean spendGold(int amount) {
+        if (gold >= amount && stack >= amount) {
+            gold -= amount;
+            stack -= amount;
+            return true;
         }
-    }
-
-
-    /**
-     * Prompts the human player for an action.
-     *
-     * @return the chosen action.
-     */
-    public GameState.Action promptAction() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(getName() + ", enter your action (FOLD, CHECK/CALL, RAISE): ");
-        String input = sc.next().toUpperCase();
-        if (input.equals("FOLD")) {
-            return GameState.Action.FOLD;
-        } else if (input.equals("RAISE")) {
-            return GameState.Action.RAISE;
-        }
-        return GameState.Action.CALL;
+        return false;
     }
 }

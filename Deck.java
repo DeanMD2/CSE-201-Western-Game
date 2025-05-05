@@ -1,7 +1,14 @@
+// Deck.java
 import java.util.Random;
 
 /**
- * Represents a standard deck of 52 cards.
+ * Class: Deck
+ * Author: Dean DiCarlo
+ * @version 1.0
+ * Course: CSE 201 Spring 2025
+ *
+ * Purpose: Represents a standard deck of 52 playing cards, providing methods
+ * to construct, shuffle, deal, and display the deck contents.
  */
 public class Deck {
     private static final int DECK_SIZE = 52;
@@ -9,28 +16,31 @@ public class Deck {
     private int currCardIndex;
 
     /**
-     * Constructs a deck with 52 cards.
+     * Constructs a new deck containing one card of each suit and rank,
+     * in a standard order before any shuffle.
      */
     public Deck() {
         Card.Suit[] suits = Card.Suit.values();
         Card.Rank[] ranks = Card.Rank.values();
         theDeck = new Card[DECK_SIZE];
-        int index = 0;
-        for (Card.Suit suit : suits) {
-            for (Card.Rank rank : ranks) {
-                theDeck[index++] = new Card(rank, suit);
+        currCardIndex = 0;
+
+        for (Card.Suit s : suits) {
+            for (Card.Rank r : ranks) {
+                theDeck[currCardIndex++] = new Card(r, s);
             }
         }
         currCardIndex = 0;
     }
 
     /**
-     * Shuffles the deck.
+     * Randomly shuffles the deck so that subsequent dealCard() calls
+     * return cards in a new, unpredictable order.
      */
     public void shuffle() {
         Random rand = new Random();
-        for (int i = theDeck.length - 1; i > 0; i--) {
-            int j = rand.nextInt(i + 1);
+        for (int i = 0; i < theDeck.length; i++) {
+            int j = rand.nextInt(DECK_SIZE);
             Card temp = theDeck[i];
             theDeck[i] = theDeck[j];
             theDeck[j] = temp;
@@ -39,19 +49,20 @@ public class Deck {
     }
 
     /**
-     * Deals the next card.
+     * Deal the next card from the deck.
      *
-     * @return the next card or null if none left.
+     * @return the next Card in the shuffled deck
      */
     public Card dealCard() {
-        if (currCardIndex < DECK_SIZE) {
-            return theDeck[currCardIndex++];
+        if (currCardIndex >= DECK_SIZE) {
+            throw new IllegalStateException("No cards left in the deck");
         }
-        return null;
+        return theDeck[currCardIndex++];
     }
 
     /**
-     * Prints the deck.
+     * Print out all 52 cards in their current order to the console,
+     * 13 cards per line.
      */
     public void printDeck() {
         for (int i = 0; i < theDeck.length; i++) {

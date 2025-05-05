@@ -25,16 +25,17 @@ public class BoomTown {
         String playerName = inputScanner.nextLine();
 
         // Initialize player with poker-compatible attributes
-        ThePlayer1 player = new ThePlayer1(playerName, 200, 1000);
+        Player player = new Player(playerName, 200, 1000);
+        new Townhall(player).enterTownhall();
 
         boolean isRunning = true;
 
         while (isRunning) {
             System.out.println("\n------------------------");
             System.out.println("Where would you like to go?");
-            System.out.println("1. Panning for Gold");
+            System.out.println("1. Town Hall");
             System.out.println("2. General Store");
-            System.out.println("3. Town Hall");
+            System.out.println("3. Panning for Gold");
             System.out.println("4. Saloon Challenge");
             System.out.println("5. Poker Game");
             System.out.println("6. Player Stats");
@@ -45,7 +46,7 @@ public class BoomTown {
 
             switch (choice) {
                 case "1": {
-                    new Panning(player, inputScanner).start();
+                	new Townhall(player).enterTownhall();
                     break;
                 }
                 case "2": {
@@ -53,7 +54,7 @@ public class BoomTown {
                     break;
                 }
                 case "3": {
-                	new Townhall(player).enterTownhall();
+                	new Panning(player, inputScanner).start();
                     break;
                 }
                 case "4": {
@@ -61,14 +62,17 @@ public class BoomTown {
                     break;
                 }
                 case "5": {
-                    // Initialize poker game with default opponents
-                    List<String> playerNames = new ArrayList<>();
-                    playerNames.add(player.getName());
-                    playerNames.add("Doc Holliday");
-                    playerNames.add("Calamity Jane");
-                    playerNames.add("Wild Bill");
-                    GameState pokerGame = new GameState(playerNames, inputScanner);
-                    pokerGame.startGame();
+                    List<PokerPlayer> seats = new ArrayList<>();
+                    seats.add(new PokerPlayer(player.getName(), player.getGold(), 200, true));
+                    seats.add(new PokerPlayer("Doc Holliday", 2000, 200, false));
+                    seats.add(new PokerPlayer("Calamity Jane", 2000, 200, false));
+                    seats.add(new PokerPlayer("Wild Bill", 2000, 200, false));
+
+                    PokerSession session = new PokerSession(seats, inputScanner);
+                    session.run();
+
+                    PokerPlayer humanSeat = seats.get(0);
+                    player.setGold(humanSeat.getGold());
                     break;
                 }
                 case "6": {

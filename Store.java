@@ -10,14 +10,14 @@ import java.util.Scanner;
  * Purpose: Allows the player to buy items with gold.
  */
 public class Store {
-    private ThePlayer1 player;
+    private Player player;
     private Scanner input;
 
     /**
      * Constructor
      * @param player The player object.
      */
-    public Store(ThePlayer1 player, Scanner input) {
+    public Store(Player player, Scanner input) {
         this.player = player;
         this.input = input;
     }

@@ -1,66 +1,79 @@
+// Card.java
+
 /**
- * Represents a playing card with a rank and suit.
+ * Class: Card
+ * Author: Dean DiCarlo
+ * @version 1.0
+ * Course: CSE 201 Spring 2025
+ *
+ * Purpose: Represents a single playing card with a suit and a rank.
+ * Provides comparison for sorting, and a human‑readable string format.
  */
-public class Card {
+public class Card implements Comparable<Card> {
+
     /**
-     * Suits with symbols.
+     * Enumeration of the four suits in a standard deck.
      */
     public enum Suit {
-        HEARTS("♥"), DIAMONDS("♦"), SPADES("♠"), CLUBS("♣");
-
-        private final String symbol;
-
-        Suit(String symbol) {
-            this.symbol = symbol;
-        }
-
-        /**
-         * @return the suit symbol.
-         */
-        public String getSymbol() {
-            return symbol;
-        }
+        CLUBS, DIAMONDS, HEARTS, SPADES
     }
 
     /**
-     * Ranks with display and value.
+     * Enumeration of the thirteen ranks in a standard deck, each with
+     * an associated display value and numeric strength.
      */
     public enum Rank {
-        TWO("2", 2), THREE("3", 3), FOUR("4", 4), FIVE("5", 5), SIX("6", 6),
-        SEVEN("7", 7), EIGHT("8", 8), NINE("9", 9), TEN("10", 10),
-        JACK("J", 11), QUEEN("Q", 12), KING("K", 13), ACE("A", 14);
+        TWO   ("2",  2),
+        THREE ("3",  3),
+        FOUR  ("4",  4),
+        FIVE  ("5",  5),
+        SIX   ("6",  6),
+        SEVEN ("7",  7),
+        EIGHT ("8",  8),
+        NINE  ("9",  9),
+        TEN   ("10", 10),
+        JACK  ("J",  11),
+        QUEEN ("Q",  12),
+        KING  ("K",  13),
+        ACE   ("A",  14);
 
-        private String display;
+        private final String symbol;
         private final int value;
 
-        Rank(String display, int value) {
-            this.display = display;
+        /**
+         * Construct a Rank enum constant.
+         *
+         * @param symbol the human‑readable symbol for this rank
+         * @param value  the numeric strength of this rank
+         */
+        Rank(String symbol, int value) {
+            this.symbol = symbol;
             this.value = value;
         }
 
         /**
-         * @return the display string.
+         * @return the symbol used to display this rank
          */
-        public String getDisplay() {
-            return display;
+        public String getSymbol() {
+            return symbol;
         }
 
         /**
-         * @return the numeric value.
+         * @return the numeric value of this rank
          */
         public int getValue() {
             return value;
         }
     }
 
-    private final Suit suit;
     private final Rank rank;
+    private final Suit suit;
 
     /**
-     * Creates a card with the specified rank and suit.
+     * Constructs a new Card with the specified rank and suit.
      *
-     * @param rank the card's rank.
-     * @param suit the card's suit.
+     * @param rank the rank of this card
+     * @param suit the suit of this card
      */
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
@@ -68,31 +81,71 @@ public class Card {
     }
 
     /**
-     * @return the card's rank.
+     * @return the rank of this card
      */
     public Rank getRank() {
         return rank;
     }
 
     /**
-     * @return the card's suit.
+     * @return the suit of this card
      */
     public Suit getSuit() {
         return suit;
     }
 
+    /**
+     * Compare this card to another based on rank value, then suit order.
+     * Enables sorting of cards.
+     *
+     * @param other the card to compare against
+     * @return a negative integer, zero, or positive integer as this card
+     *         is less than, equal to, or greater than the other card
+     */
     @Override
-    public String toString() {
-        return rank.getDisplay() + suit.getSymbol();
+    public int compareTo(Card other) {
+        int diff = Integer.compare(this.rank.getValue(), other.rank.getValue());
+        if (diff != 0) {
+            return diff;
+        }
+        return this.suit.compareTo(other.suit);
     }
 
     /**
-     * Compares cards by rank value.
-     *
-     * @param other the card to compare.
-     * @return negative, zero, or positive if this card is less, equal, or greater.
+     * @return a string representation of the card, e.g. "K♠" or "10♥"
      */
-    public int compareTo(Card other) {
-        return Integer.compare(this.rank.getValue(), other.rank.getValue());
+    @Override
+    public String toString() {
+        String suitSymbol;
+        switch (suit) {
+            case CLUBS:    suitSymbol = "♣"; break;
+            case DIAMONDS: suitSymbol = "♦"; break;
+            case HEARTS:   suitSymbol = "♥"; break;
+            case SPADES:   suitSymbol = "♠"; break;
+            default:       suitSymbol = "?";  break;
+        }
+        return rank.getSymbol() + suitSymbol;
+    }
+
+    /**
+     * Two cards are equal if they have the same rank and suit.
+     *
+     * @param obj the object to compare
+     * @return true if obj is a Card with identical rank and suit
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Card)) return false;
+        Card that = (Card) obj;
+        return this.rank == that.rank && this.suit == that.suit;
+    }
+
+    /**
+     * @return a hash code consistent with equals(), combining rank and suit
+     */
+    @Override
+    public int hashCode() {
+        return rank.hashCode() * 31 + suit.hashCode();
     }
 }
