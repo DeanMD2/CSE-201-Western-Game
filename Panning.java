@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * Class: Panning
- * Author: 
+ * Author: Jason
  * @version 1.0
  * Course: CSE 201 Spring 2025
  * Written: April 25, 2025
